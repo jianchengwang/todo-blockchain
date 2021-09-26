@@ -46,12 +46,12 @@ func main()  {
 		os.Exit(-1)
 	}
 
-	// create channel and join
-	if err := sdkInit.CreateAndJoinChannel(&info); err != nil {
-		fmt.Println(">> Create channel and join error:", err)
-		os.Exit(-1)
-	}
-
+	//// create channel and join
+	//if err := sdkInit.CreateAndJoinChannel(&info); err != nil {
+	//	fmt.Println(">> Create channel and join error:", err)
+	//	os.Exit(-1)
+	//}
+	//
 	// create chaincode lifecycle
 	if err := sdkInit.CreateCCLifecycle(&info, 1, false, sdk); err != nil {
 		fmt.Println(">> create chaincode lifecycle error: %v", err)
