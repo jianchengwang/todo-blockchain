@@ -1,7 +1,7 @@
 package main
 
 import (
-	"fabric-go-sdk-demo/sdkInit"
+	sdkInit "fabric-go-sdk-demo/sdkinit"
 	"fmt"
 	"os"
 )
