@@ -37,7 +37,7 @@ func main()  {
 		OrdererOrgName:   "OrdererOrg",
 		OrdererEndpoint:  "orderer.example.com",
 		ChaincodeID:      cc_name,
-		ChaincodePath:    "/home/wjc/workspace/todo-blockchain/fabric-test/fabric-go-sdk-demo/chaincode", // absolute path or relative to gopath
+		ChaincodePath:    "/root/workspace/todo-blockchain/fabric-test/fabric-go-sdk-demo/chaincode", // absolute path or relative to gopath
 		ChaincodeVersion: cc_version,
 	}
 
@@ -54,41 +54,41 @@ func main()  {
 	//	fmt.Println(">> Create channel and join error:", err)
 	//	os.Exit(-1)
 	//}
-	//
-	//// create chaincode lifecycle
-	//if err := sdkInit.CreateCCLifecycle(&info, 1, false, sdk); err != nil {
-	//	fmt.Println(">> create chaincode lifecycle error: %v", err)
-	//	os.Exit(-1)
-	//}
+
+	// create chaincode lifecycle
+	if err := sdkInit.CreateCCLifecycle(&info, 1, false, sdk); err != nil {
+		fmt.Println(">> create chaincode lifecycle error: %v", err)
+		os.Exit(-1)
+	}
 	//
 	//// invoke chaincode set status
-	//fmt.Println(">> 通过链码外部服务设置链码状态......")
-	//
-	//if err := info.InitService(info.ChaincodeID, info.ChannelID, info.Orgs[0], sdk);err != nil{
-	//
-	//	fmt.Println("InitService successful")
-	//	os.Exit(-1)
-	//}
-	//
-	//App=sdkInit.Application{
-	//	SdkEnvInfo: &info,
-	//}
-	//fmt.Println(">> 设置链码状态完成")
-	//
-	//a:=[]string{"set","ID","123"}
-	//ret, err := App.Set(a)
-	//if err != nil {
-	//	fmt.Println(err)
-	//}
-	//fmt.Println("<--- 添加信息　--->：", ret)
-	//
-	//
-	//b := []string{"get","ID"}
-	//response, err := App.Get(b)
-	//if err != nil {
-	//	fmt.Println(err)
-	//}
-	//fmt.Println("<--- 查询信息　--->：", response)
+	fmt.Println(">> 通过链码外部服务设置链码状态......")
+
+	if err := info.InitService(info.ChaincodeID, info.ChannelID, info.Orgs[0], sdk);err != nil{
+
+		fmt.Println("InitService successful")
+		os.Exit(-1)
+	}
+
+	App=sdkInit.Application{
+		SdkEnvInfo: &info,
+	}
+	fmt.Println(">> 设置链码状态完成")
+
+	a:=[]string{"set","ID","123"}
+	ret, err := App.Set(a)
+	if err != nil {
+		fmt.Println(err)
+	}
+	fmt.Println("<--- 添加信息　--->：", ret)
+
+
+	b := []string{"get","ID"}
+	response, err := App.Get(b)
+	if err != nil {
+		fmt.Println(err)
+	}
+	fmt.Println("<--- 查询信息　--->：", response)
 
 	services.InitChainBrowserService()
 	services.NewRoute()
