@@ -4,6 +4,7 @@ import (
 	sdkInit "fabric-go-sdk-demo/sdkinit"
 	"fmt"
 	"os"
+	"os/exec"
 )
 
 const (
@@ -13,6 +14,9 @@ const (
 
 var App sdkInit.Application
 func main()  {
+
+	os.Setenv("PATH", os.Getenv("PATH") + ":/usr/local/go/bin")
+	os.Setenv("GOPROXY", "https://goproxy.cn,direct")
 
 	// init orgs information
 	orgs := []*sdkInit.OrgInfo{
@@ -35,7 +39,7 @@ func main()  {
 		OrdererOrgName:   "OrdererOrg",
 		OrdererEndpoint:  "orderer.example.com",
 		ChaincodeID:      cc_name,
-		ChaincodePath:    "./chaincode/",
+		ChaincodePath:    "/home/wjc/workspace/todo-blockchain/fabric-test/fabric-go-sdk-demo/chaincode", // absolute path or relative to gopath
 		ChaincodeVersion: cc_version,
 	}
 
@@ -51,7 +55,18 @@ func main()  {
 	//	fmt.Println(">> Create channel and join error:", err)
 	//	os.Exit(-1)
 	//}
-	//
+	output2, err := exec.Command("echo", os.Getenv("PATH")).Output()
+	if err != nil {
+		fmt.Println(err.Error())
+	}
+	fmt.Println(string(output2))
+
+	output3, err := exec.Command("go", "version").Output()
+	if err != nil {
+		fmt.Println(err.Error())
+	}
+	fmt.Println(string(output3))
+
 	// create chaincode lifecycle
 	if err := sdkInit.CreateCCLifecycle(&info, 1, false, sdk); err != nil {
 		fmt.Println(">> create chaincode lifecycle error: %v", err)
@@ -72,12 +87,12 @@ func main()  {
 	}
 	fmt.Println(">> 设置链码状态完成")
 
-	a:=[]string{"set","ID","123"}
-	ret, err := App.Set(a)
-	if err != nil {
-		fmt.Println(err)
-	}
-	fmt.Println("<--- 添加信息　--->：", ret)
+	//a:=[]string{"set","ID","123"}
+	//ret, err := App.Set(a)
+	//if err != nil {
+	//	fmt.Println(err)
+	//}
+	//fmt.Println("<--- 添加信息　--->：", ret)
 
 
 	b := []string{"get","ID"}
