@@ -74,7 +74,7 @@ Organizations:
                 Rule: "OR('Org1MSP.peer')"    
         
         AnchorPeers:
-            - Host: 127.0.0.1
+            - Host: peer0.org1.example.com
               Port: 7051
            
 
@@ -106,7 +106,7 @@ Organizations:
                 Rule: "OR('Org2MSP.peer')"   
 
         AnchorPeers:
-            - Host: 127.0.0.1
+            - Host: peer0.org2.example.com
               Port: 9051
 
 ################################################################################
