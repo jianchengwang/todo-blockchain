@@ -2,18 +2,16 @@
 pragma solidity ^0.8.2;
 
 import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
+import "hardhat/console.sol";
 
 contract Token is ERC20 {
-    // Some string type variables to identify the token.
-    // The `public` modifier makes a variable readable from outside the contract.
-    string public name = "PerformanceToken";
-    string public symbol = "PTC";
+    // An address type variable is used to store ethereum accounts.
+    address public owner;
 
-    // The fixed amount of tokens stored in an unsigned integer type variable.
-    uint256 public totalSupply = 1000000;
-
-    constructor() ERC20(name, symbol) {
-        _mint(msg.sender, totalSupply * 10**decimals());
+    constructor() ERC20("PerformanceToken", "PTC") {
+        _mint(msg.sender, 1000000 * 10 ** decimals());
+        owner = msg.sender;
+        console.log("owner", owner);
     }
 
     /**
@@ -22,23 +20,16 @@ contract Token is ERC20 {
      * The `external` modifier makes a function *only* callable from outside
      * the contract.
      */
-    function transfer(address to, uint256 amount) external {
+    function transferTo(address to, uint256 amount) external {
         // Check if the transaction sender has enough tokens.
         // If `require`'s first argument evaluates to `false` then the
         // transaction will revert.
-        require(Token.balanceOf(msg.sender) >= amount, "Not enough tokens");
+        require(balanceOf(msg.sender) >= amount, "Not enough tokens");
+
+        console.log("Sender balance is %s tokens", balanceOf(msg.sender));
+        console.log("Trying to send %s tokens to %s", amount, to);
 
         // Transfer the amount.
-        Token.transfer(to, amount);
-    }
-
-    /**
-     * Read only function to retrieve the token balance of a given account.
-     *
-     * The `view` modifier indicates that it doesn't modify the contract's
-     * state, which allows us to call it without executing a transaction.
-     */
-    function balanceOf(address account) external view returns (uint256) {
-        return Token.balanceOf(account);
+        transfer(to, amount);
     }
 }

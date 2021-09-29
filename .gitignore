@@ -19,3 +19,7 @@
 **/.env
 
 **/vendor/
+
+**/node_modules/
+./hardhat-demo/artifacts/
+./hardhat-demo/cache/
