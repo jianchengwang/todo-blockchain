@@ -23,4 +23,3 @@
 **/node_modules/
 hardhat-demo/artifacts/
 hardhat-demo/cache/
-hardhat-demo/secrets.json

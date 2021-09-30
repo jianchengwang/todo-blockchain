@@ -8,13 +8,18 @@ contract Token is ERC20 {
     // An address type variable is used to store ethereum accounts.
     address public owner;
 
+    TaskLedger[] public allLedgers;
+    mapping(address => TaskLedger[]) public userLedgers;
     mapping(uint256 => TaskLedger[]) public taskLedgers;
+
 
     struct TaskLedger {
         uint256 taskId;
         bytes32 sysNoticeType;
         bytes32 taskTransactionType;
-        bytes32 txId;
+        address from;
+        address to;
+        uint createTime;
     }
 
     constructor() ERC20("PerformanceToken", "PTC") {
@@ -29,7 +34,7 @@ contract Token is ERC20 {
      * The `external` modifier makes a function *only* callable from outside
      * the contract.
      */
-    function transferTo(address from, address to, uint256 amount) external {
+    function transferTo(address from, address to, uint256 amount, uint256 taskId, TaskLedger memory _taskLedger) external {
         // Check if the transaction sender has enough tokens.
         // If `require`'s first argument evaluates to `false` then the
         // transaction will revert.
@@ -40,6 +45,29 @@ contract Token is ERC20 {
         console.log("Trying to send %s tokens to %s", amount, to);
 
         // Transfer the amount.
-        transfer(to, amount);
+        transferFrom(from, to, amount);
+
+        // Add to ledgers
+        _taskLedger.taskId = taskId;
+        _taskLedger.createTime = block.timestamp;
+        allLedgers.push(_taskLedger);
+        userLedgers[from].push(_taskLedger);
+        userLedgers[to].push(_taskLedger);
+        taskLedgers[taskId].push(_taskLedger);
+    }
+
+    // get all ledgers
+    function getAllLedgers() view external returns(TaskLedger[] memory) {
+        return allLedgers;
+    }
+
+    // get task ledgers
+    function getTaskLedgers(uint256 taskId) view external returns(TaskLedger[] memory) {
+        return taskLedgers[taskId];
+    }
+
+    // get user ledgers
+     function getTaskLedgers(address account) view external returns(TaskLedger[] memory) {
+        return userLedgers[account];
     }
 }

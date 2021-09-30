@@ -1,7 +1,8 @@
 require("@nomiclabs/hardhat-waffle");
 require('@nomiclabs/hardhat-ethers');
 require("@nomiclabs/hardhat-etherscan");
-const { mnemonic, apiKey } = require('./secrets.json');
+require('hardhat-abi-exporter');
+const { mnemonic, accounts, apiKey } = require('./secrets.json');
 
 task("accounts", "Prints list of accounts", async() => {
   const accounts = await ethers.getSigners()
@@ -17,7 +18,10 @@ module.exports = {
   solidity: "0.8.2",
   networks: {
     localhost: {
-      url: "http://127.0.0.1:8545"
+      url: "http://127.0.0.1:8545",
+      chainId: 31337,
+      // accounts: [`0x${privateKey}`],
+      accounts: accounts
     },
     // ropsten: {
     //   url: `https://eth-ropsten.alchemyapi.io/v2/${ALCHEMY_API_KEY}`,
@@ -45,5 +49,13 @@ module.exports = {
   },
   etherscan: {
     apiKey: apiKey
+  },
+  abiExporter: {
+    path: './data/abi',
+    clear: true,
+    flat: true,
+    only: [':ERC20$'],
+    spacing: 2,
+    pretty: true,
   }
 };
