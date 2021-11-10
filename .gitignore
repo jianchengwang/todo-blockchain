@@ -23,6 +23,8 @@
 **/node_modules/
 hardhat-demo/artifacts/
 hardhat-demo/cache/
+hardhat-pet/artifacts/
+hardhat-pet/cache/
 
 bsc-private/geth_linux
 bsc-private/bsc/geth/
