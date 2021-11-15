@@ -30,3 +30,6 @@ bsc-private/geth_linux
 bsc-private/bsc/geth/
 bsc-private/bsc/geth.ipc
 bsc-private/bsc/*.log.*
+
+cosmos-demo/starport
+cosmos-demo/**/go.sum

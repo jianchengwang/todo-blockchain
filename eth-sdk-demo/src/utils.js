@@ -12,3 +12,7 @@ export function getDotEnv() {
       : resolve(rootPath, `./.env`),
   }).parsed;
 }
+
+export function getGlobal() {
+  
+}
