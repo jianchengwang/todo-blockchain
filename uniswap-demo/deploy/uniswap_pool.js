@@ -1,14 +1,13 @@
-import { ethers } from 'ethers';
-import {
-    abi as FACTORY_ABI,
-    bytecode as FACTORY_BYTECODE,
-} from '@uniswap/v3-core/artifacts/contracts/UniswapV3Factory.sol/UniswapV3Factory.json'
-import { getDotEnv } from "./utils.mjs"
+const ethers = require('ethers');
+const UniswapJSON = require('@uniswap/v3-core/artifacts/contracts/UniswapV3Factory.sol/UniswapV3Factory.json')
+const FACTORY_ABI = UniswapJSON.abi
+const FACTORY_BYTECODE = UniswapJSON.bytecode
+// import { getDotEnv } from "./utils.mjs"
 
-const dotEnv = getDotEnv();
-const nodeService = dotEnv.nodeService;
-const privateKey = dotEnv.privateKey;
-const owner = dotEnv.owner;
+// const dotEnv = getDotEnv();
+const nodeService = 'http://nps.shang-chain.com:18028';
+const privateKey = '0xce17eb1db596d840355168a9337861a99015db5061b4821338412870b8d105d3';
+const owner = '';
 
 // 连接网络
 const provider = ethers.getDefaultProvider(nodeService);
@@ -26,14 +25,14 @@ const wallet = new ethers.Wallet(privateKey, provider);
     let contract = await factory.deploy();
 
     // 部署交易有一旦挖出，合约地址就可用
-    // 参考: https://ropsten.etherscan.io/address/0x2bd9aaa2953f988153c8629926d22a6a5f69b14e
+    // 参考: http://nps.shang-chain.com:18027/address/0xb3f6CdA2a51b65AB399C1eB7027e51a3c7b418cE
     console.log(contract.address);
-    // "0x2bD9aAa2953F988153c8629926D22A6a5F69b14E"
+    // "0xb3f6CdA2a51b65AB399C1eB7027e51a3c7b418cE"
 
     // 发送到网络用来部署合约的交易
-    // 查看: https://ropsten.etherscan.io/tx/0x159b76843662a15bd67e482dcfbee55e8e44efad26c5a614245e12a00d4b1a51
+    // 查看: http://nps.shang-chain.com:18027/tx/0x3d73ebe9555ebbdce9c0b908ebd7a495910a484700ab6f3bc42202409ae562c9
     console.log(contract.deployTransaction.hash);
-    // "0x159b76843662a15bd67e482dcfbee55e8e44efad26c5a614245e12a00d4b1a51"
+    // "0x3d73ebe9555ebbdce9c0b908ebd7a495910a484700ab6f3bc42202409ae562c9"
 
     //合约还没有部署;我们必须等到它被挖出
     await contract.deployed()
