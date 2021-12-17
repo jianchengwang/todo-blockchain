@@ -1,7 +1,7 @@
 require("@nomiclabs/hardhat-waffle");
 require('@nomiclabs/hardhat-ethers');
 require("@nomiclabs/hardhat-etherscan");
-require('hardhat-abi-exporter');
+// require('hardhat-abi-exporter');
 const { mnemonic, accounts, apiKey } = require('./secrets.json');
 
 task("accounts", "Prints list of accounts", async() => {
@@ -50,12 +50,12 @@ module.exports = {
   etherscan: {
     apiKey: apiKey
   },
-  abiExporter: {
-    path: './data/abi',
-    clear: true,
-    flat: true,
-    only: [':ERC20$'],
-    spacing: 2,
-    pretty: true,
-  }
+  // abiExporter: {
+  //   path: './data/abi',
+  //   clear: true,
+  //   flat: true,
+  //   only: [':ERC20$'],
+  //   spacing: 2,
+  //   pretty: true,
+  // }
 };
